@@ -3,20 +3,22 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
-my_name = "Максим"
-friend_name = "Иннокнетий"
+sender_name = "Максим"
+recipient_name = "Иннокнетий"
 link = "https://dvmn.org/profession-ref-program/maximheilelov/QvDnC/"
 mail_from = "maximyandzen@yandex.ru"
 mail_to = "maximheilelov@gmail.com"
 subject = "Важно!"
+sender_email = "maximyandzen@yandex.ru"
+recipient_email = "maximheilelov@gmail.com"
 
 mail = """\
-From: {mailfrom}
-To: {mailto}
+From: {mail_from}
+To: {mail_to}
 Subject: {subject}
 Content-Type: text/plain; charset="UTF-8";
 
-Привет, {name2}! {myname} приглашает тебя на сайт {link}!
+Привет, {recipient_name}! {sender_name} приглашает тебя на сайт {link}!
 
 {link} — это новая версия онлайн-курса по программированию. 
 Изучаем Python и не только. Решаем задачи. Получаем ревью от преподавателя. 
@@ -32,13 +34,14 @@ Content-Type: text/plain; charset="UTF-8";
 
 Регистрируйся → {link}  
 На курсы, которые еще не вышли, можно подписаться и получить уведомление о релизе сразу на имейл.
-""".format(mailfrom=mail_from, subject = subject, name2=friend_name, link=link, myname=my_name, mailto = mail_to).encode("utf-8")
+""".format(mail_from=mail_from, subject = subject, recipient_name=recipient_name, link=link, sender_name=sender_name, mail_to = mail_to).encode("utf-8")
 
 
 server = smtplib.SMTP_SSL('smtp.yandex.ru', 465)
 server.login(os.environ['LOGIN'], os.environ['PASSWORD'])
-server.sendmail('maximyandzen@yandex.ru', 'maximheilelov@gmail.com', mail)
+server.sendmail(sender_email, recipient_email, mail)
 server.quit()
+
 
 
 
